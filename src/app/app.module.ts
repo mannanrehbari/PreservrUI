@@ -16,6 +16,7 @@ import { PresProcsComponent } from './components/pres-procs/pres-procs.component
 import { PresProcComponent } from './components/pres-proc/pres-proc.component';
 import { PresEventsComponent } from './components/pres-events/pres-events.component';
 
+import {CdkTreeModule} from '@angular/cdk/tree';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PresEventsComponent } from './components/pres-events/pres-events.compon
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
-    MatTreeModule
+    MatTreeModule,
+    CdkTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
