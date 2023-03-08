@@ -7,10 +7,16 @@ import { AppComponent } from './app.component';
 // angular material modules
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PresToolbarComponent } from './components/pres-toolbar/pres-toolbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+
+import { PresToolbarComponent } from './components/pres-toolbar/pres-toolbar.component';
 import { PresSystemComponent } from './components/pres-system/pres-system.component';
 import { PresProcsComponent } from './components/pres-procs/pres-procs.component';
 import { PresProcComponent } from './components/pres-proc/pres-proc.component';
@@ -37,7 +43,12 @@ import {CdkTreeModule} from '@angular/cdk/tree';
     MatToolbarModule,
     MatButtonModule,
     MatTreeModule,
-    CdkTreeModule
+    CdkTreeModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

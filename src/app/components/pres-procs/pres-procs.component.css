@@ -4,12 +4,12 @@
     
 }
 .allprocs{
-    width: 70%;
+    width: 80%;
     float: left;
     background-color: 	#F8F8F8;
 }
 .procevents{
-    width: 30%;
+    width: 20%;
     background-color: 	#F0F0F0;
     float: left;
 }

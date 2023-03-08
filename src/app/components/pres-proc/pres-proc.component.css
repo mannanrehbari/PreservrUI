@@ -1,4 +1,18 @@
-.example-tree-node {
-    display: flex;
-    align-items: center;
-  }
+.container{
+  padding-left: 40pt;
+  padding-top: 20pt;
+  padding-right: 10pt;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
