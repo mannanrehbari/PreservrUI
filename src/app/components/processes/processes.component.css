@@ -5,19 +5,19 @@
 
 .systemsection{
     background-color: #3f51b5;
-    height: 300px;
+    color: white;
+    height: 150px;
+    padding-top: 20px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
 
 .chart-container{
-    width: 75%;
-    float: left;
     /* background-color: 	#F8F8F8; */
-    padding: 10px;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: auto;
 }
 
-.events-container{
-    width: 25%;
-    padding: 5px;
-    float: left;
-}
 
