@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PresEventsComponent } from './pres-events.component';
+import { ToolbarComponent } from './toolbar.component';
 
-describe('PresEventsComponent', () => {
-  let component: PresEventsComponent;
-  let fixture: ComponentFixture<PresEventsComponent>;
+describe('ToolbarComponent', () => {
+  let component: ToolbarComponent;
+  let fixture: ComponentFixture<ToolbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PresEventsComponent ]
+      declarations: [ ToolbarComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PresEventsComponent);
+    fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

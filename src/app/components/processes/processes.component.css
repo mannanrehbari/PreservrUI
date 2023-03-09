@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+     
+}
+
+.systemsection{
+    background-color: #3f51b5;
+    height: 300px;
+}
+
+.chart-container{
+    width: 75%;
+    float: left;
+    /* background-color: 	#F8F8F8; */
+    padding: 10px;
+}
+
+.events-container{
+    width: 25%;
+    padding: 5px;
+    float: left;
+}
+
