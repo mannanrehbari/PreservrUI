@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import Chart from 'chart.js/auto';
+import { ChartDataset } from 'chart.js';
 import { Process } from 'src/app/model/process';
 import { ProcessQueue } from 'src/app/model/process-queue';
 import { Snapshot } from 'src/app/model/snapshot';
@@ -12,7 +13,9 @@ import { Snapshot } from 'src/app/model/snapshot';
 })
 export class ProcessesComponent implements OnInit {
 
-  public chart: any;
+  public cpuLineChart: any;
+  public cpuDoughnut: any;
+
   queue = new ProcessQueue(5);
   usageData: any;
   firstLoad: boolean = false;
@@ -47,17 +50,52 @@ export class ProcessesComponent implements OnInit {
     var lastList: Process[] = this.queue.lastList();
     var procLabels: string[] = lastList.map((process)=> process.command);
     var procDatasets = this.queueToData();
-    this.chart.data.labels = procLabels
-    this.chart.data.datasets = procDatasets
-    this.chart.update()
+    this.cpuLineChart.data.labels = procLabels
+    this.cpuLineChart.data.datasets = procDatasets
+    this.cpuLineChart.update()
+    
+    this.setCpuDoughnutColors(procLabels, procDatasets)
+    this.cpuDoughnut.data.labels = procLabels.slice(0, 10)
+    this.cpuDoughnut.data.datasets = procDatasets
+    this.cpuDoughnut.update()
 
+  }
+
+  setCpuDoughnutColors(procLabels: string[], procDatasets: ChartDataset[]) {
+    procDatasets.forEach((dataset: ChartDataset) => {
+      const top10Colors = [
+        '#1abc9c',
+        '#3498db',
+        '#9b59b6',
+        '#f1c40f',
+        '#e67e22',
+        '#e74c3c',
+        '#2ecc71',
+        '#34495e',
+        '#16a085',
+        '#27ae60'
+        // 'rgba(255, 99, 132, 0.5)',
+        // 'rgba(54, 162, 235, 0.5)',
+        // 'rgba(255, 206, 86, 0.5)',
+        // 'rgba(75, 192, 192, 0.5)',
+        // 'rgba(54, 162, 235, 0.5)',
+        // 'rgba(255, 206, 86, 0.5)',
+        // 'rgba(75, 192, 192, 0.5)',
+        // 'rgba(54, 162, 235, 0.5)',
+        // 'rgba(255, 206, 86, 0.5)',
+        // 'rgba(153, 102, 255, 0.5)'
+      ];
+      const otherColor = 'rgba(200, 200, 200, 0.5)';
+      const backgroundColors = top10Colors.concat(Array(procLabels.length - 10).fill(otherColor));
+      dataset.backgroundColor = backgroundColors;
+    });
   }
 
   createChart(){
     var lastList: Process[] = this.queue.lastList();
     var procLabels: string[] = lastList.map((process)=> process.command);
     var procDatasets = this.queueToData();
-    this.chart = new Chart("MyChart", {
+    this.cpuLineChart = new Chart("cpuLineChart", {
       type: 'line', //this denotes tha type of chart
       data: {// values on X-Axis
         labels: procLabels, 
@@ -67,6 +105,40 @@ export class ProcessesComponent implements OnInit {
         aspectRatio:2.5
       }
     });
+    this.createCpuDoughnut(procLabels, procDatasets)
+  }
+
+  createCpuDoughnut(procLabels: any[], procDatasets: any) {
+    // procDatasets.forEach((dataset: ChartDataset) => {
+    //   const top5Colors = [
+    //     'rgba(255, 99, 132, 0.5)',
+    //     'rgba(54, 162, 235, 0.5)',
+    //     'rgba(255, 206, 86, 0.5)',
+    //     'rgba(75, 192, 192, 0.5)',
+    //     'rgba(54, 162, 235, 0.5)',
+    //     'rgba(255, 206, 86, 0.5)',
+    //     'rgba(75, 192, 192, 0.5)',
+    //     'rgba(54, 162, 235, 0.5)',
+    //     'rgba(255, 206, 86, 0.5)',
+    //     'rgba(153, 102, 255, 0.5)'
+    //   ];
+    //   const otherColor = 'rgba(200, 200, 200, 0.5)';
+    //   const backgroundColors = top5Colors.concat(Array(procLabels.length - 10).fill(otherColor));
+    //   dataset.backgroundColor = backgroundColors;
+    // });
+    this.setCpuDoughnutColors(procLabels, procDatasets)
+    this.cpuDoughnut = new Chart("cpuDoughnut", {
+      type: 'doughnut', //this denotes the type of chart
+      data: {// values on X-Axis
+        labels: procLabels.slice(0, 10), 
+	      datasets: procDatasets
+      },
+      options: {
+        aspectRatio:2.5
+      }
+
+    });
+
   }
 
   queueToData() : any {
@@ -78,7 +150,7 @@ export class ProcessesComponent implements OnInit {
       const cpuPercents: string[] = processesAt.map((process) => process.cpuPercent)
       item.data = cpuPercents
       // console.log(item)
-      item.backgroundColor = "pink"
+      item.backgroundColor = "#cc33ff"
       result.push(item);
     }
     return result;
