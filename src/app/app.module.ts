@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,11 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ProcessesComponent } from './components/processes/processes.component';
 import { NgChartsModule } from 'ng2-charts';
@@ -28,6 +34,7 @@ import { NgChartsModule } from 'ng2-charts';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
 
     MatIconModule,
     MatToolbarModule,
@@ -36,6 +43,9 @@ import { NgChartsModule } from 'ng2-charts';
     MatPaginatorModule,
     MatInputModule,
     MatTableModule,
+    MatSliderModule,
+    MatRadioModule,
+    MatSlideToggleModule,
     NgChartsModule
   ],
   providers: [],

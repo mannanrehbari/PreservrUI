@@ -20,6 +20,26 @@ export class ProcessesComponent implements OnInit {
   usageData: any;
   firstLoad: boolean = false;
 
+
+  // CPU slider properties
+  cpu_slider_disabled = false;
+  cpu_max = 100;
+  cpu_min = 0;
+  cpu_showTicks = false;
+  cpu_step = 1;
+  cpu_thumbLabel = false;
+  cpu_value:number = 0;
+
+
+  // CPU radio properties
+  cpu_selected_snapshot: string = "";
+  cpu_snapshots: string[] = ['5', '10', '15'];
+
+  // CPU toggles
+  cpu_auto_terminate = false;
+  cpu_policy_active = false;
+
+
   constructor() {
     const eventSource = new EventSource("http://localhost:8080/process/top");
     eventSource.addEventListener('processCpuUsage', (event:any) => {
@@ -50,9 +70,9 @@ export class ProcessesComponent implements OnInit {
     var lastList: Process[] = this.queue.lastList();
     var procLabels: string[] = lastList.map((process)=> process.command);
     var procDatasets = this.queueToData();
-    this.cpuLineChart.data.labels = procLabels
-    this.cpuLineChart.data.datasets = procDatasets
-    this.cpuLineChart.update()
+    // this.cpuLineChart.data.labels = procLabels
+    // this.cpuLineChart.data.datasets = procDatasets
+    // this.cpuLineChart.update()
     
     this.setCpuDoughnutColors(procLabels, procDatasets)
     this.cpuDoughnut.data.labels = procLabels.slice(0, 10)

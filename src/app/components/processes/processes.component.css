@@ -1,9 +1,9 @@
-.container{
+.container {
     display: flex;
-     
+
 }
 
-.systemsection{
+.systemsection {
     background-color: #3f51b5;
     color: white;
     height: 150px;
@@ -12,13 +12,62 @@
     padding-right: 200px;
 }
 
-.chart-container{
+.metrics {
+    padding-top: 0px;
+    display: flex;
+    width: 100%;
+}
+
+.cpu-doughnut-container {
     /* background-color: 	#F8F8F8; */
     text-align: center;
-    padding-left: 100px;
-    padding-right: 100px;
-    width: 50%;
+    /* padding-left: 10px;
+    padding-right: 100px; */
+    padding-top: 40px;
+    width: 65%;
     margin: auto;
 }
 
+.cpu-controls {
+    padding-top: 40px;
+    text-align: center;
+    width: 15%;
+    background-color: #F8F8F8;
+}
 
+.cpu-logs {
+    padding-top: 40px;
+    text-align: center;
+    width: 20%;
+    background-color: #f2f2f2;
+}
+
+.cpu-control-policy {
+    width: 90%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.cpu-slider {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 80%;
+}
+
+.cpu-slider-label {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px 0;
+    max-width: 284px;
+}
+
+.cpu-radio-group {
+    display: flex;
+    /* flex-direction: column; */
+    margin: 15px 0;
+    align-items: flex-start;
+}
+
+.cpu-radio-button {
+    margin: 2px;
+}

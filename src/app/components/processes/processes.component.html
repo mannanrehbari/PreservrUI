@@ -3,10 +3,57 @@
     <h3>Processes: {{usageData.Processes}}</h3>
 
 </div>
-<div class="chart-container">
-    <canvas  id="cpuLineChart" >{{ cpuLineChart }}</canvas>
-    
-</div>
-<div class="chart-container">
-    <canvas  id="cpuDoughnut" >{{ cpuLineChart }}</canvas>
+
+<div class="metrics">
+
+
+    <div class="cpu-doughnut-container">
+        <h1>CPU usage</h1>
+        <canvas id="cpuDoughnut">{{ cpuDoughnut }}</canvas>
+        <!-- <canvas  id="cpuLineChart" >{{ cpuLineChart }}</canvas> -->
+    </div>
+    <div class="cpu-controls">
+        <h2>CPU controls</h2>
+        <div class="cpu-control-policy">
+            <h3>Policy Active</h3>
+            <mat-slide-toggle [(ngModel)]="cpu_policy_active" color="primary"></mat-slide-toggle>
+            <br><br>
+
+            <h3>Total Usage Limit</h3>
+            <div class="cpu-slider-label">
+                <label id="example-name-label" class="example-name-label">Value</label>
+                <label class="example-value-label">{{cpu_value}}</label>
+            </div>
+            <mat-slider class="cpu-slider" [disabled]="cpu_slider_disabled" [max]="cpu_max" [min]="cpu_min"
+                [step]="cpu_step" [discrete]="cpu_thumbLabel" [showTickMarks]="cpu_showTicks">
+                <input matSliderThumb [(ngModel)]="cpu_value">
+            </mat-slider>
+            <br><br>
+
+            <h3> Snapshots to monitor </h3>
+            <mat-radio-group aria-labelledby="cpu-radio-group-label" class="cpu-radio-group"
+                [(ngModel)]="cpu_selected_snapshot">
+                <mat-radio-button class="cpu-radio-button" *ngFor="let cpu_snapshot of cpu_snapshots" [value]="cpu_snapshot">
+                    {{cpu_snapshot}}
+                </mat-radio-button>
+            </mat-radio-group>
+            <!-- <div>Your favorite season is: {{cpu_selected_snapshot}}</div> -->
+
+            <h3>Auto Termination</h3>
+            <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" ></mat-slide-toggle>
+
+            <br><br>
+
+
+        </div>
+
+
+
+
+
+    </div>
+    <div class="cpu-logs">
+        <h1>CPU logs</h1>
+    </div>
+
 </div>
