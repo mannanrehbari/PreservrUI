@@ -29,18 +29,23 @@
 }
 
 .cpu-controls {
-    padding-top: 40px;
+    padding-top: 20px;
     text-align: center;
     width: 15%;
     background-color: #F8F8F8;
 }
 
-.cpu-logs {
-    padding-top: 40px;
+
+.cpu-info-panel {
+    padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
     text-align: center;
     width: 20%;
     background-color: #f2f2f2;
 }
+
+
 
 .cpu-control-policy {
     width: 90%;

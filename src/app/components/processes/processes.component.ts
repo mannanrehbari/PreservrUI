@@ -20,25 +20,24 @@ export class ProcessesComponent implements OnInit {
   usageData: any;
   firstLoad: boolean = false;
 
-
   // CPU slider properties
   cpu_slider_disabled = false;
   cpu_max = 100;
-  cpu_min = 0;
+  cpu_min = 30;
   cpu_showTicks = false;
   cpu_step = 1;
   cpu_thumbLabel = false;
   cpu_value:number = 0;
 
-
   // CPU radio properties
   cpu_selected_snapshot: string = "";
   cpu_snapshots: string[] = ['5', '10', '15'];
+  cpuradiogroupdisabled = false;
 
   // CPU toggles
   cpu_auto_terminate = false;
+  cpuautoterminatedisabled = false;
   cpu_policy_active = false;
-
 
   constructor() {
     const eventSource = new EventSource("http://localhost:8080/process/top");
@@ -79,6 +78,12 @@ export class ProcessesComponent implements OnInit {
     this.cpuDoughnut.data.datasets = procDatasets
     this.cpuDoughnut.update()
 
+  }
+
+  toggleCpuPolicy(event: any){
+    this.cpuautoterminatedisabled = event.checked
+    this.cpuradiogroupdisabled = event.checked
+    this.cpu_slider_disabled = event.checked
   }
 
   setCpuDoughnutColors(procLabels: string[], procDatasets: ChartDataset[]) {

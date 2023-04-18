@@ -16,13 +16,13 @@
         <h2>CPU controls</h2>
         <div class="cpu-control-policy">
             <h3>Policy Active</h3>
-            <mat-slide-toggle [(ngModel)]="cpu_policy_active" color="primary"></mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="cpu_policy_active" color="primary" (change)="toggleCpuPolicy($event)"></mat-slide-toggle>
             <br><br>
 
             <h3>Total Usage Limit</h3>
             <div class="cpu-slider-label">
-                <label id="example-name-label" class="example-name-label">Value</label>
-                <label class="example-value-label">{{cpu_value}}</label>
+                <label id="cpu-name-label" class="cpu-name-label">Value</label>
+                <label class="cpu-value-label">{{cpu_value}}</label>
             </div>
             <mat-slider class="cpu-slider" [disabled]="cpu_slider_disabled" [max]="cpu_max" [min]="cpu_min"
                 [step]="cpu_step" [discrete]="cpu_thumbLabel" [showTickMarks]="cpu_showTicks">
@@ -30,9 +30,9 @@
             </mat-slider>
             <br><br>
 
-            <h3> Snapshots to monitor </h3>
+            <h3> Snapshots to monitor</h3>
             <mat-radio-group aria-labelledby="cpu-radio-group-label" class="cpu-radio-group"
-                [(ngModel)]="cpu_selected_snapshot">
+                [(ngModel)]="cpu_selected_snapshot" [disabled]="cpuradiogroupdisabled">
                 <mat-radio-button class="cpu-radio-button" *ngFor="let cpu_snapshot of cpu_snapshots" [value]="cpu_snapshot">
                     {{cpu_snapshot}}
                 </mat-radio-button>
@@ -40,8 +40,7 @@
             <!-- <div>Your favorite season is: {{cpu_selected_snapshot}}</div> -->
 
             <h3>Auto Termination</h3>
-            <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" ></mat-slide-toggle>
-
+            <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" [disabled]="cpuautoterminatedisabled"></mat-slide-toggle>
             <br><br>
 
 
@@ -52,8 +51,15 @@
 
 
     </div>
-    <div class="cpu-logs">
-        <h1>CPU logs</h1>
+    
+    <div class="cpu-info-panel">
+        <div class="cpu-exceptions">
+            <h2> Exceptions </h2>
+        </div>
+        <div class="cpu-logs">
+            <h2> Logs</h2>
+        </div>
+
     </div>
 
 </div>
