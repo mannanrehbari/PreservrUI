@@ -15,18 +15,18 @@
     <div class="cpu-controls">
         <h2>CPU controls</h2>
         <div class="cpu-control-policy">
-            <h3>Policy Active</h3>
+            <h3>Activate Policy</h3>
             <mat-slide-toggle [(ngModel)]="cpu_policy_active" color="primary" (change)="toggleCpuPolicy($event)"></mat-slide-toggle>
             <br><br>
 
             <h3>Total Usage Limit</h3>
             <div class="cpu-slider-label">
                 <label id="cpu-name-label" class="cpu-name-label">Value</label>
-                <label class="cpu-value-label">{{cpu_value}}</label>
+                <label class="cpu-value-label">{{cpu_percent_value}}</label>
             </div>
             <mat-slider class="cpu-slider" [disabled]="cpu_slider_disabled" [max]="cpu_max" [min]="cpu_min"
                 [step]="cpu_step" [discrete]="cpu_thumbLabel" [showTickMarks]="cpu_showTicks">
-                <input matSliderThumb [(ngModel)]="cpu_value">
+                <input matSliderThumb [(ngModel)]="cpu_percent_value">
             </mat-slider>
             <br><br>
 
@@ -37,29 +37,86 @@
                     {{cpu_snapshot}}
                 </mat-radio-button>
             </mat-radio-group>
-            <!-- <div>Your favorite season is: {{cpu_selected_snapshot}}</div> -->
+            
 
+            <h3> Snapshot violation percentage </h3>
+            <mat-radio-group aria-labelledby="cpu-violation-radio-group-label" class="cpu-violation-radio-group"
+                [(ngModel)]="cpu_selected_violation_percent" [disabled]="cpuviolationdisabled">
+                <mat-radio-button class="cpu-violation-radio-button" *ngFor="let cpu_violation_percent of cpu_violation_percents" [value]="cpu_violation_percent">
+                    {{cpu_violation_percent}}
+                </mat-radio-button>
+            </mat-radio-group>
+            
             <h3>Auto Termination</h3>
             <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" [disabled]="cpuautoterminatedisabled"></mat-slide-toggle>
             <br><br>
-
-
         </div>
-
-
-
-
-
     </div>
     
     <div class="cpu-info-panel">
         <div class="cpu-exceptions">
-            <h2> Exceptions </h2>
+            <h4>Power Guzzlers</h4>
+            <section class="guzzlers-container mat-elevation-z8" tabindex="0">
+                <table mat-table #guzzlerstable [dataSource]="guzzlersDS">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="Command">
+                    <th mat-header-cell *matHeaderCellDef> Command </th>
+                    <td mat-cell *matCellDef="let element"> {{element.command}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="User">
+                    <th mat-header-cell *matHeaderCellDef> User </th>
+                    <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="PID">
+                    <th mat-header-cell *matHeaderCellDef> PID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.pid}} </td>
+                  </ng-container>
+              
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </section>
+
         </div>
+
+        <br><br>
         <div class="cpu-logs">
-            <h2> Logs</h2>
+            <h4>Axed Power Drainers</h4>
+            <section class="axed-drainers-container mat-elevation-z8" tabindex="0">
+                <table mat-table #drainerstable [dataSource]="drainersDS">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="Command">
+                    <th mat-header-cell *matHeaderCellDef> Command </th>
+                    <td mat-cell *matCellDef="let element"> {{element.command}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="User">
+                    <th mat-header-cell *matHeaderCellDef> User </th>
+                    <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="PID">
+                    <th mat-header-cell *matHeaderCellDef> PID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.pid}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </section>
         </div>
 
     </div>
+
+
 
 </div>

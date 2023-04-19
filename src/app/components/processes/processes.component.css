@@ -6,7 +6,7 @@
 .systemsection {
     background-color: #3f51b5;
     color: white;
-    height: 150px;
+    height: 100px;
     padding-top: 20px;
     padding-left: 200px;
     padding-right: 200px;
@@ -23,29 +23,28 @@
     text-align: center;
     /* padding-left: 10px;
     padding-right: 100px; */
-    padding-top: 40px;
-    width: 65%;
+    /* padding-top: 10px; */
+    width: 50%;
     margin: auto;
+    /* opacity: 0.05; */
 }
 
 .cpu-controls {
     padding-top: 20px;
     text-align: center;
-    width: 15%;
+    width: 20%;
     background-color: #F8F8F8;
 }
 
 
 .cpu-info-panel {
-    padding-top: 20px;
+    padding-top: 5px;
     padding-left: 5px;
     padding-right: 5px;
     text-align: center;
-    width: 20%;
+    width: 30%;
     background-color: #f2f2f2;
 }
-
-
 
 .cpu-control-policy {
     width: 90%;
@@ -75,4 +74,22 @@
 
 .cpu-radio-button {
     margin: 2px;
+}
+
+.guzzlers-container {
+    height: 200px;
+    overflow: auto;
+}
+
+.axed-drainers-container{
+    height: 200px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none !important;
 }
