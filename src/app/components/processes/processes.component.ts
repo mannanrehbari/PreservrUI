@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 import Chart from 'chart.js/auto';
@@ -10,6 +12,8 @@ import { Process } from 'src/app/model/process';
 import { ProcessQueue } from 'src/app/model/process-queue';
 import { Snapshot } from 'src/app/model/snapshot';
 import { Exceeder } from 'src/app/model/exceeder';
+import { Observable } from 'rxjs';
+import { TerminationResponse } from 'src/app/model/termination-response';
 
 
 @Component({
@@ -54,10 +58,13 @@ export class ProcessesComponent implements OnInit {
   cpu_policy_active = false;
 
   // Logging usage
-  powerGuzzlers: Process[] = [];
-  axedPowerDrainers: Process[] = [];
+
   guzzlersDisplayedColumns = ['Command', 'User', 'PID', 'Action'];
   drainersDisplayedColumns = ['Command', 'User', 'PID'];
+  
+  powerGuzzlers: Process[] = [];
+  axedPowerDrainers: Process[] = [];
+
   guzzlersDS = new MatTableDataSource<Process>(this.powerGuzzlers);
   drainersDS = new MatTableDataSource<Process>(this.axedPowerDrainers);
 
@@ -65,7 +72,9 @@ export class ProcessesComponent implements OnInit {
   @ViewChild('guzzlerstable') guzzlerstable!: MatTable<any>;
   @ViewChild('drainerstable') drainerstable!: MatTable<any>;
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(private _snackBar: MatSnackBar, 
+    private http: HttpClient, 
+    private changeDetectorRef: ChangeDetectorRef) {
 
     const eventSource = new EventSource("http://localhost:8080/process/top");
     eventSource.addEventListener('processCpuUsage', (event: any) => {
@@ -163,8 +172,45 @@ export class ProcessesComponent implements OnInit {
 
   }
 
-  forceTerminateGuzzler(process: any) {
-    this._snackBar.open('Hi from snackbar', 'Dismiss');
+  getProcessTerminationStatus(pid: string): Observable<TerminationResponse> {
+    const url = `http://localhost:8080/process/terminate/${pid}`;
+    return this.http.get<TerminationResponse>(url);
+  }
+
+  terminateProcess(process: Process) {
+    const pid = process.pid;
+    this.getProcessTerminationStatus(pid).subscribe(
+      (result) => {
+        console.log(result.message)
+        console.log(result.success)
+        if (result.message === "PROCESS TERMINATED" && result.success) {
+          const processIndex = this.powerGuzzlers.findIndex((process) => process.pid === pid);
+          if (processIndex !== -1) {
+
+            const processToMove = this.powerGuzzlers[processIndex];
+            this.axedPowerDrainers.push(processToMove);
+          
+            // Remove the process from the powerGuzzlers table
+            this.powerGuzzlers.splice(processIndex, 1);
+          
+            // Update the data sources for the tables
+            this.guzzlersDS.data = this.powerGuzzlers;
+            this.drainersDS.data = this.axedPowerDrainers;
+          
+            // Refresh the tables
+            this.guzzlerstable.renderRows();
+            this.drainerstable.renderRows();
+            this._snackBar.open(result.message, 'Dismiss');
+          }
+        } else {
+          console.log(`Termination failed for PID ${pid}`);
+        }
+      },
+      (error) => {
+        console.log(error);
+        this._snackBar.open(error, 'Dismiss');
+      }
+    );
   }
 
   createCpuDoughnut(procLabels: any[], procDatasets: any) {
@@ -221,20 +267,20 @@ export class ProcessesComponent implements OnInit {
                 // terminate or mark for termination
 
                 if (this.cpu_auto_terminate) { // terminate the process
-                  // console.log('terminate pid: ' + key)
-                  // console.log('I was here')
+                  this.terminateProcess(process)
                   const processExists = this.axedPowerDrainers.some(
                     (item) => item.pid === process.pid);
                   if (!processExists) {
                     this.axedPowerDrainers.push(process);
                   }
                   this.drainerstable.renderRows()
+                  this._snackBar.open('Process with PID: '+ process.pid+' terminated due to high CPU utilization', 'Dismiss');
 
                 } else { // mark for manual termination/add exceptions
                   // console.log('terminate pid: ' + key)
                   const processExists = this.powerGuzzlers.some(
                     (item) => item.pid === process.pid);
-                  if(!processExists) {
+                  if (!processExists) {
                     this.powerGuzzlers.push(process);
                   }
                   this.guzzlerstable.renderRows()

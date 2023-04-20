@@ -48,7 +48,7 @@
             </mat-radio-group>
             
             <h3>Auto Termination</h3>
-            <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" [disabled]="cpuautoterminatedisabled"></mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="cpu_auto_terminate" [disabled]="cpuautoterminatedisabled" color="warn"></mat-slide-toggle>
             <br><br>
         </div>
     </div>
@@ -80,7 +80,7 @@
                   <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef>Actions</th>
                     <td mat-cell *matCellDef="let element">
-                      <button mat-button color="warn" (click)="forceTerminateGuzzler(element)">Terminate</button>
+                      <button mat-button color="warn" (click)="terminateProcess(element)">Terminate</button>
                     </td>
                   </ng-container>
               
@@ -89,7 +89,6 @@
                   <tr mat-row *matRowDef="let row; columns: guzzlersDisplayedColumns;"></tr>
                 </table>
               </section>
-
         </div>
 
         <br><br>
