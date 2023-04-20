@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 import Chart from 'chart.js/auto';
@@ -55,7 +56,8 @@ export class ProcessesComponent implements OnInit {
   // Logging usage
   powerGuzzlers: Process[] = [];
   axedPowerDrainers: Process[] = [];
-  displayedColumns = ['Command', 'User', 'PID'];
+  guzzlersDisplayedColumns = ['Command', 'User', 'PID', 'Action'];
+  drainersDisplayedColumns = ['Command', 'User', 'PID'];
   guzzlersDS = new MatTableDataSource<Process>(this.powerGuzzlers);
   drainersDS = new MatTableDataSource<Process>(this.axedPowerDrainers);
 
@@ -63,7 +65,7 @@ export class ProcessesComponent implements OnInit {
   @ViewChild('guzzlerstable') guzzlerstable!: MatTable<any>;
   @ViewChild('drainerstable') drainerstable!: MatTable<any>;
 
-  constructor() {
+  constructor(private _snackBar: MatSnackBar) {
 
     const eventSource = new EventSource("http://localhost:8080/process/top");
     eventSource.addEventListener('processCpuUsage', (event: any) => {
@@ -159,6 +161,10 @@ export class ProcessesComponent implements OnInit {
     this.cpuDoughnut.data.datasets = procDatasets
     this.cpuDoughnut.update()
 
+  }
+
+  forceTerminateGuzzler(process: any) {
+    this._snackBar.open('Hi from snackbar', 'Dismiss');
   }
 
   createCpuDoughnut(procLabels: any[], procDatasets: any) {

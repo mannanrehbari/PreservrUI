@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -46,6 +47,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatSliderModule,
     MatRadioModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     NgChartsModule
   ],
   providers: [],
